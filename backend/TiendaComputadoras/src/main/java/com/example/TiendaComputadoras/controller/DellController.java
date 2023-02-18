@@ -2,8 +2,11 @@ package com.example.TiendaComputadoras.controller;
 
 import com.example.TiendaComputadoras.DTO.DTOApple;
 import com.example.TiendaComputadoras.DTO.DTODell;
+import com.example.TiendaComputadoras.DTO.UsuarioDTO;
+import com.example.TiendaComputadoras.DTO.UsuarioLoginDTO;
 import com.example.TiendaComputadoras.Service.INServDell;
 import com.example.TiendaComputadoras.Service.ServiceDell;
+import com.example.TiendaComputadoras.Service.UsuarioService;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -12,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -24,30 +29,52 @@ import java.util.*;
 
 
 @RestController
-@RequestMapping("/Dell")
+@RequestMapping("/usuario")
 public class DellController {
     //igual lo mismo inyectamos la dependencia del servicio correspondiente
     private INServDell serviceDell;//polimorfismo cambiamos de estado en el objeto
+    private UsuarioService usuarioService;
 
-    @Autowired //este no es necesario
-    public DellController(INServDell serviceDell) {
+    @Autowired //este no es necesario la cereza del pastel de inyeccion de dependencias
+    public DellController(INServDell serviceDell, UsuarioService usuarioService) {
+
         this.serviceDell = serviceDell;
+        this.usuarioService = usuarioService;
     }
 
-    //@GetMapping("/obtenerDells")
-    @GetMapping
-    //public List<Dell> obtenerDells()
-    //ahora esto ya cambia por los metodos de tipos rest en las respuestas
-    /*
-    public List<DTODell> obtenerDells(){
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@Valid @RequestBody UsuarioLoginDTO usuarioLogin, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<String>("El usuario y la clave son obligatorios", HttpStatus.BAD_REQUEST);
+        }
 
-        return serviceDell.findAll();
-    }*/
+        return new ResponseEntity<UsuarioDTO>(usuarioService.login(usuarioLogin), HttpStatus.OK);
+
+    }
+
+    @PostMapping("/crear")
+    public ResponseEntity<?> crear(@Valid @RequestBody UsuarioDTO usuario, BindingResult validaciones)
+            throws Exception {
+
+        if (validaciones.hasErrors()) {
+            return new ResponseEntity<String>("Campos Imcompletos", HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            return new ResponseEntity<UsuarioDTO>(usuarioService.crear(usuario), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/dell")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR') || hasAuthority('USUARIO_COMUN')")
+
     public ResponseEntity<?> list() {
         return ResponseEntity.ok().body(serviceDell.findAll());//construimos ya el json para el fronted 200
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("dell/{id}")
     /*
     //respuesta 200 o 404 si no fue encontrado
     public List<DTODell> obtenerDell(@PathVariable Long id) {
@@ -65,7 +92,7 @@ public class DellController {
     }
 
     //@PostMapping("/dellCrear")
-    @PostMapping
+    @PostMapping("/dellCrear")
     //public Dell dellCrear(@RequestBody Dell data){ //viene un objeto json y lo convierte a una clase java
     //codigo de respuesta 201
     /*
@@ -93,7 +120,7 @@ public class DellController {
     //manejador de errores exceptionHandler
 
     //@PutMapping("/dellModificar") //yo en mi put no obtengo el id en url si no viene todo en el body el id
-    @PutMapping("/{id}")
+    @PutMapping("dell/{id}")
     //public String dellModificar(@RequestBody Dell data) //modificamos la respuesta a 201
    /*
     public String dellModificar(@RequestBody DTODell data){
@@ -109,7 +136,7 @@ public class DellController {
        serviceDell.updateDell(dell);
        return ResponseEntity.status(HttpStatus.CREATED).body("se actualizo correctamente"); //tenemos que persistir los datos en BD
    }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("dell/{id}")
     //codigo de respuesta 204
     /*
     public String dellEliminar(@PathVariable Long id){
