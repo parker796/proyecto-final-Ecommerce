@@ -28,6 +28,7 @@ import java.net.URI;
 import java.util.*;
 
 
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
 @RequestMapping("/usuario")
 public class DellController {
