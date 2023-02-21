@@ -12,31 +12,31 @@
             <div class="col-xl-5 col-lg-7 col-md-9">
                 <div class="register_form padding_default shadow_sm">
                     <h4 class="title_2">Login</h4>
-                    <p class="mb-4 text_md">Login if you a a returing customer</p>
+                    <p class="mb-4 text_md">Inicia sesion si eres un cliente</p>
                     <form action="">
                         <div class="row">
                             <div class="col-12">
                                 <div class="single_billing_inp">
-                                    <label>Email Address <span>*</span></label>
-                                    <input type="email" placeholder="example@mail.com">
+                                    <label>nombre de usuario <span>*</span></label> <!--esta opcion de ngModelOptions fue sugerida por la consola del navegador o poniendo el name-->
+                                    <input type="text" [(ngModel)]="nombreUsuario" name="nombreUsuario" placeholder="ingresa tu nombre de usuario">
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="single_billing_inp">
-                                    <label>Password <span>*</span></label>
-                                    <input type="password" placeholder="type password">
+                                    <label>clave <span>*</span></label>
+                                    <input type="password" [(ngModel)]="clave" name="clave" placeholder="ingresa tu clave">
                                 </div>
                             </div>
                             <div class="col-12 mt-2 d-flex justify-content-between align-items-center">
                                 <div class="custom_check check_2 d-flex align-items-center">
                                     <input type="checkbox" class="check_inp" hidden id="save-default">
-                                    <label for="save-default">Remember Me</label>
+                                    <label for="save-default">Recordando me</label>
                                 </div>
 
-                                <a href="forgot-password.html" class="text-color">Forgot Password?</a>
+                                <a href="forgot-password.html" class="text-color">Olvidates tu Clave?</a>
                             </div>
                             <div class="col-12 mt-3">
-                                <button type="submit" class="default_btn xs_btn rounded px-4 d-block w-100">Login</button>
+                                <button type="submit" (click)="login()" class="default_btn xs_btn rounded px-4 d-block w-100">Login</button>
                             </div>
 
                         </div>
