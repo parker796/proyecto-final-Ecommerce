@@ -505,7 +505,8 @@
                     </a>
                     <div class="myacc_cont">
                         <div class="ac_join">
-                            <p>Welcome to RAFCART Shop</p>
+                            <p *ngIf="user">Welcome {{ user }} to RAFCART Shop</p>
+                            <p *ngIf="!user">Welcome to RAFCART Shop</p>
                             <div class="account_btn d-flex justify-content-between">
                                <a routerLink="/auth/registro" class="default_btn">Join</a>
                                 <a routerLink="/auth/login" class="default_btn second">Sing in</a>
@@ -527,8 +528,8 @@
                             <a href="shopping-cart.html">
                                  <i class="icon-cart"></i>
                                 My Cart
-                            </a>
-                            <a href="login.html">
+                            </a><!--el logout se muestra solo si el usuario esta autenticado-->
+                            <a href="#" onclick="return false;" *ngIf="user" (click)="logout()">
                                 <i class="las la-power-off"></i>
                                 Log out
                             </a>

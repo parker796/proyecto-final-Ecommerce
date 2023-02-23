@@ -12,32 +12,32 @@
         <div class="row justify-content-center">
             <div class="col-xl-5 col-lg-7 col-md-9">
                 <div class="register_form padding_default shadow_sm">
-                    <h4 class="title_2">Create an account</h4>
-                    <p class="mb-4 text_md">Register here if you are a new customer.</p>
+                    <h4 class="title_2">Crear una cuenta</h4>
+                    <p class="mb-4 text_md">Registrate aqui como un nuevo cliente</p>
                     <form action="">
                         <div class="row">
                             <div class="col-12">
                                 <div class="single_billing_inp">
-                                    <label>Full Name <span>*</span></label>
-                                    <input type="text" placeholder="Jone Doe">
+                                    <label>Nombre de usuario <span>*</span></label>
+                                    <input [(ngModel)]="nombreUsuario" name="nombreUsuario" type="text" placeholder="nombre de usuario">
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="single_billing_inp">
-                                    <label>Email Address <span>*</span></label>
-                                    <input type="email" placeholder="example@mail.com">
+                                    <label>Ingresa un rol <span>*</span></label>
+                                    <input [(ngModel)]="rol" name="rol" type="text" placeholder="ingresa un rol valido">
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="single_billing_inp">
                                     <label>Password <span>*</span></label>
-                                    <input type="password" placeholder="type password">
+                                    <input [(ngModel)]="clave" name="password" type="password" placeholder="escribe el password">
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="single_billing_inp">
-                                    <label>Confirm Password <span>*</span></label>
-                                    <input type="password" placeholder="confirm your password">
+                                    <label>Confirmar el Password <span>*</span></label>
+                                    <input [(ngModel)]="repeat_clave" name="repeat_clave" type="password" placeholder="confirma tu password">
                                 </div>
                             </div>
                             <div class="col-12 mt-2">
@@ -48,8 +48,7 @@
                                 </div>
                             </div>
                             <div class="col-12 mt-3">
-                                <button type="submit" class="default_btn xs_btn rounded px-4 d-block w-100">create
-                                    account</button>
+                                <button type="submit" (click)="registro()" class="default_btn xs_btn rounded px-4 d-block w-100">crear cuenta</button>
                             </div>
 
                         </div>
