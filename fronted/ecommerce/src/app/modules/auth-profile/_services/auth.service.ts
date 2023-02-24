@@ -1,13 +1,15 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { map, catchError, of } from 'rxjs';
+import { Producto } from '../_model/Producto';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  
 
   user: any;
   token: any = null;
@@ -69,5 +71,14 @@ export class AuthService {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     this.router.navigate(['/auth/login']);
+   // document.location.reload(); 
   }
+
+  baseUrl = 'http://localhost:8080/usuario/dell';
+
+ getProductos() {
+  let headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.token);
+    return this.http.get<Producto[]>(this.baseUrl,{headers});
+  }
+  
 }

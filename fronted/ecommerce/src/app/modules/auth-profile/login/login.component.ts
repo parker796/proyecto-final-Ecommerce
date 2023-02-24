@@ -24,7 +24,8 @@ constructor(public authService: AuthService, public router: Router){
     },50);
     //checamos si ya estan logeados no tiene caso que este aqui en esta vista
     if(this.authService.user && this.authService.token){
-        this.router.navigate(['/']); //ve a la vista del home
+      //  this.router.navigate(['/']); //ve a la vista del home
+      this.router.navigate(["/auth/admin-productos"]);
     }
   }
 
