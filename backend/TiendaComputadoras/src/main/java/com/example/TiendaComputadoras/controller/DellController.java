@@ -70,18 +70,12 @@ public class DellController {
 
     @GetMapping("/dell")
     @PreAuthorize("hasAuthority('ADMINISTRADOR') || hasAuthority('USUARIO_COMUN')")
-
     public ResponseEntity<?> list() {
         return ResponseEntity.ok().body(serviceDell.findAll());//construimos ya el json para el fronted 200
     }
 
-    @GetMapping("dell/{id}")
-    /*
-    //respuesta 200 o 404 si no fue encontrado
-    public List<DTODell> obtenerDell(@PathVariable Long id) {
-
-        return serviceDell.findAllById(id);
-    }*/
+    @GetMapping("/dell/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR') || hasAuthority('USUARIO_COMUN')")
     public ResponseEntity<?> view(@PathVariable Long id) {
         List<DTODell> o = serviceDell.findAllById(id);
         if (o == null) {
@@ -89,45 +83,20 @@ public class DellController {
             //throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El equipo Dell con el id especificado no existe.");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El equipo Dell con el id especificado no existe.");
         }
-        return ResponseEntity.ok(o.get(0)); //200
+       // return (ResponseEntity<?>) serviceDell.findAllById(id);
+       // return ResponseEntity.ok(o.get(0)); //200
+        return ResponseEntity.ok().body(serviceDell.findAllById(id));
     }
 
-    //@PostMapping("/dellCrear")
     @PostMapping("/dellCrear")
-    //public Dell dellCrear(@RequestBody Dell data){ //viene un objeto json y lo convierte a una clase java
-    //codigo de respuesta 201
-    /*
-    public DTODell dellCrear(@RequestBody DTODell data){
-        return serviceDell.save(data);
-    }*/
+    @PreAuthorize("hasAuthority('ADMINISTRADOR') || hasAuthority('USUARIO_COMUN')")
     public ResponseEntity<?> create(@RequestBody DTODell data) {
         DTODell dtoDell = serviceDell.save(data);
         return ResponseEntity.status(HttpStatus.CREATED).body(dtoDell); //201
     }
-   /* public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody DTODell data){
-        Map<String, Object> response = new HashMap<>();
-        try {
-            DTODell dtoDell = serviceDell.save(data);
-        }catch (Exception e) {
 
-            response.put("mensaje", "hubo un error");
-            response.put("error", e.getMessage().concat(": ").concat(e.getMessage()));
-            return new ResponseEntity<Map<String, Object>>(response,
-                    HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        //return ResponseEntity.status(HttpStatus.CREATED).body(dtoDell); //201
-        return ResponseEntity.created(URI.create("1")).build();
-}*/
-    //manejador de errores exceptionHandler
-
-    //@PutMapping("/dellModificar") //yo en mi put no obtengo el id en url si no viene todo en el body el id
-    @PutMapping("dell/{id}")
-    //public String dellModificar(@RequestBody Dell data) //modificamos la respuesta a 201
-   /*
-    public String dellModificar(@RequestBody DTODell data){
-        serviceDell.updateDell(data);
-      return "actualizado correctamente ";
-    }*/
+    @PutMapping("/dellEditar/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
    public ResponseEntity<?> edit(@RequestBody DTODell dell, @PathVariable Long id){
        List<DTODell> o = serviceDell.findAllById(id);
        if(o == null){
@@ -135,15 +104,11 @@ public class DellController {
            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El equipo Dell con el id especificado no existe.");
        }
        serviceDell.updateDell(dell);
-       return ResponseEntity.status(HttpStatus.CREATED).body("se actualizo correctamente"); //tenemos que persistir los datos en BD
+       // return ResponseEntity.ok(o.get(0)); //200
+        return ResponseEntity.ok().body(serviceDell.findAll());
    }
-    @DeleteMapping("dell/{id}")
-    //codigo de respuesta 204
-    /*
-    public String dellEliminar(@PathVariable Long id){
-        serviceDell.deleteById(id);
-        return "se elimino correctamente ";
-    }*/
+    @DeleteMapping("/dellBorrar/{id}")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> delete(@PathVariable Long id){
         List<DTODell> o = serviceDell.findAllById(id);
         if(o == null){
@@ -151,7 +116,8 @@ public class DellController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El equipo Dell con el id especificado no existe.");
         }
         serviceDell.deleteById(id);
-        return (ResponseEntity<?>) ResponseEntity.noContent().build();//204 no hay contenido
+        //return (ResponseEntity<?>) ResponseEntity.noContent().build();//204 no hay contenido
+        return ResponseEntity.ok().body(serviceDell.findAll());
     }
 
    //dejamos pendiente el controllerAdviceException para todo los controladores
