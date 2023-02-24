@@ -21,8 +21,8 @@
                         <td>{{producto.memoriaRam}}</td>
                         <td>{{producto.procesador}}</td>
                         <td>
-                           <button class="btn btn-warning">Editar</button>
-                            <button  class="btn btn-warning" style="margin-left: 10px;">Borrar</button>
+                           <button (click)="Editar(producto)" class="btn btn-warning">Editar</button>
+                            <button (click)="Delete(producto)"  class="btn btn-warning" style="margin-left: 10px;">Borrar</button>
 <!-- (click)="Editar(producto)"
 (click)="Delete(producto)-->
                         </td>

@@ -8,13 +8,17 @@ import { AuthProfileModule } from '../auth-profile.module';
 import { ListarComponent } from './listar/listar.component';
 import { AuthProfileRoutingModule } from '../auth-profile-routing.module';
 import { AuthProfileComponent } from '../auth-profile.component';
+import { NuevoComponent } from './nuevo/nuevo.component';
+import { EditarComponent } from './editar/editar.component';
 
 
 
 @NgModule({
   declarations: [
     AuthProfileComponent,
-    ListarComponent
+   // EditarComponent,
+  //  ListarComponent
+    //NuevoComponent
   ],
   imports: [
     CommonModule,

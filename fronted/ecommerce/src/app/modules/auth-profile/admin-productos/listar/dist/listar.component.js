@@ -21,6 +21,20 @@ var ListarComponent = /** @class */ (function () {
             //alert(data[0].id + " " + data[0].disco + " " + data[0].memoriaRam + " " + data[0].procesador);
         });
     };
+    ListarComponent.prototype.Editar = function (producto) {
+        //guardamos el id de la fila seleccionada en localstorage
+        localStorage.setItem("id", producto.id.toString());
+        this.router.navigate(["/auth/admin-productos/editar"]);
+    };
+    ListarComponent.prototype.Delete = function (producto) {
+        var _this = this;
+        this.authService.deleteProducto(producto)
+            .subscribe(function (data) {
+            _this.productos = _this.productos.filter(function (p) { return p !== producto; }); //en lugar de que el backend devuelva
+            //un string que era como lo tenia devuelve como si fuera un get de toda las listas 
+            alert("producto eliminado");
+        });
+    };
     ListarComponent = __decorate([
         core_1.Component({
             selector: 'app-listar',

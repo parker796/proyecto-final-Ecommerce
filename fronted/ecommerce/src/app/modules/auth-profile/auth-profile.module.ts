@@ -11,6 +11,8 @@ import {HttpClientModule} from '@angular/common/http'
 import { RouterModule } from '@angular/router';
 import { AdminProductosComponent } from './admin-productos/admin-productos.component';
 import { ListarComponent } from './admin-productos/listar/listar.component';
+import { NuevoComponent } from './admin-productos/nuevo/nuevo.component';
+import { EditarComponent } from './admin-productos/editar/editar.component';
  //import { BrowserModule } from '@angular/platform-browser';
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { ListarComponent } from './admin-productos/listar/listar.component';
     LoginComponent,
     RegisterComponent,
     AdminProductosComponent,
-    ListarComponent
+    ListarComponent,
+    NuevoComponent,
+    EditarComponent
   ],
   imports: [
     CommonModule,

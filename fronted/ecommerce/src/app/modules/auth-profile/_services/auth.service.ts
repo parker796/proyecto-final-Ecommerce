@@ -10,6 +10,7 @@ import { Producto } from '../_model/Producto';
 })
 export class AuthService {
   
+  
 
   user: any;
   token: any = null;
@@ -74,11 +75,31 @@ export class AuthService {
    // document.location.reload(); 
   }
 
-  baseUrl = 'http://localhost:8080/usuario/dell';
-
+  baseUrl = 'http://localhost:8080/usuario/';
  getProductos() {
   let headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.token);
-    return this.http.get<Producto[]>(this.baseUrl,{headers});
+    return this.http.get<Producto[]>(this.baseUrl + 'dell',{headers});
   }
+
+  createProducto(producto: Producto){
+    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.token);
+    return this.http.post<Producto>(this.baseUrl + 'dellCrear', producto, {headers});
+  }
+
+  getProductoId(id: number){
+    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.token);
+    return this.http.get<Producto[]>(this.baseUrl+"dell/"+id,{headers});
+  }
+
+  updateProducto(producto: Producto){
+  let headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.token);
+  return this.http.put<Producto[]>(this.baseUrl+'dellEditar/'+producto.id, producto, {headers}); //aqui varea dependiendo la construccion del metodo en el backend
+}
+
+deleteProducto(producto:Producto){
+  let headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.token);
+  return this.http.delete<Producto[]>(this.baseUrl+"dellBorrar/"+producto.id,{headers});
+}
+
   
 }

@@ -13,7 +13,6 @@ var shared_module_1 = require("src/app/shared/shared.module");
 var forms_1 = require("@angular/forms");
 var http_1 = require("@angular/common/http");
 var router_1 = require("@angular/router");
-var listar_component_1 = require("./listar/listar.component");
 var auth_profile_routing_module_1 = require("../auth-profile-routing.module");
 var auth_profile_component_1 = require("../auth-profile.component");
 var AdminProductosModule = /** @class */ (function () {
@@ -23,7 +22,6 @@ var AdminProductosModule = /** @class */ (function () {
         core_1.NgModule({
             declarations: [
                 auth_profile_component_1.AuthProfileComponent,
-                listar_component_1.ListarComponent
             ],
             imports: [
                 common_1.CommonModule,

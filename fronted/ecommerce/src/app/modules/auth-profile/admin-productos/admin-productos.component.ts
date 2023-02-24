@@ -28,5 +28,9 @@ export class AdminProductosComponent {
     Listar(){
       this.router.navigate(["/auth/admin-productos/listar"]) //se pone el nombre que pusimos en path de app-routing
     }
+
+    Nuevo(){
+      this.router.navigate(["/auth/admin-productos/nuevo"]) //se pone el nombre que pusimos en path de app-routing
+    }
 }
 

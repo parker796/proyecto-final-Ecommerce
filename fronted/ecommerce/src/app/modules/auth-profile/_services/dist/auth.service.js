@@ -15,7 +15,7 @@ var AuthService = /** @class */ (function () {
         this.http = http;
         this.router = router;
         this.token = null;
-        this.baseUrl = 'http://localhost:8080/usuario/dell';
+        this.baseUrl = 'http://localhost:8080/usuario/';
         //tiene que cargarse el usuario y el token
         this.loadStorage(); //nos va servir para ir viendo en los demas servicios si el usuario si esta autenticado
     }
@@ -74,7 +74,23 @@ var AuthService = /** @class */ (function () {
     };
     AuthService.prototype.getProductos = function () {
         var headers = new http_1.HttpHeaders().set('Authorization', 'Bearer ' + this.token);
-        return this.http.get(this.baseUrl, { headers: headers });
+        return this.http.get(this.baseUrl + 'dell', { headers: headers });
+    };
+    AuthService.prototype.createProducto = function (producto) {
+        var headers = new http_1.HttpHeaders().set('Authorization', 'Bearer ' + this.token);
+        return this.http.post(this.baseUrl + 'dellCrear', producto, { headers: headers });
+    };
+    AuthService.prototype.getProductoId = function (id) {
+        var headers = new http_1.HttpHeaders().set('Authorization', 'Bearer ' + this.token);
+        return this.http.get(this.baseUrl + "dell/" + id, { headers: headers });
+    };
+    AuthService.prototype.updateProducto = function (producto) {
+        var headers = new http_1.HttpHeaders().set('Authorization', 'Bearer ' + this.token);
+        return this.http.put(this.baseUrl + 'dellEditar/' + producto.id, producto, { headers: headers }); //aqui varea dependiendo la construccion del metodo en el backend
+    };
+    AuthService.prototype.deleteProducto = function (producto) {
+        var headers = new http_1.HttpHeaders().set('Authorization', 'Bearer ' + this.token);
+        return this.http["delete"](this.baseUrl + "dellBorrar/" + producto.id, { headers: headers });
     };
     AuthService = __decorate([
         core_1.Injectable({
