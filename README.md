@@ -75,7 +75,7 @@ Al ejecutar el proyecto por primera vez se crearan dos tablas en tu base de dato
 * UPDATE http://localhost:8080/usuario/dellEditar este endpoint solo se puede accerder con el rol **ADMINISTRADOR** el es el que puede modificar algun producto.
 * DELETE http://localhost:8080/usuario/dellBorrar este endpoint solo se puede accerder con el rol **ADMINISTRADOR** el es el que puede modificar algun producto.
 
-* Observacion: Las rutas tienen nombres de los roles solo como demostración del ejercicio, el nombre de cada ruta dependerá de las necesidades de sus proyectos, las rutas ya estan implementadas en nuestro proyecto de angular ya con el token devuelveto dependiendo del rol para asi poder acceder a ese recuros que necesitemos, al igual de que si estamos en rol usuario comun y queremos borrar un producto por ejemplo no esta permitido porque el backend tiene una validacion desde el controlador para saber que rol es el que se esta manejando, y bueno al igual del token que estemos manejando.
+* Observacion: Las rutas tienen nombres de los roles solo como demostración del ejercicio, el nombre de cada ruta dependerá de las necesidades de sus proyectos, las rutas ya estan implementadas en nuestro proyecto de angular ya con el token devuelto dependiendo del rol para asi poder acceder a ese recurso que necesitemos, al igual de que si estamos en rol usuario comun y queremos borrar un producto por ejemplo no esta permitido porque el backend tiene una validacion desde el controlador para saber que rol es el que se esta manejando, y bueno al igual del token que estemos manejando.
 
 ## Bono
 
