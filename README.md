@@ -1,6 +1,6 @@
 
-<h1 align="center"> Proyecto final Ecommerce con Spring boot y Angular </h1>
-En este proyecto se implementaron herramientas como Spring Boot + Spring Security + JWT + MySql + Loggers + Junit5 + Lombok + MapStruct y como fronted fue angular 15 y un template llamado RafCart que es una plantilla ya hecha en angular para mas informacion les dejo la liga ** https://themeforest.net/category/site-templates/admin-templates?term=angular%20material** hay gratuitos que son unos repositorios en github o de compra
+<h1 align="center"> Proyecto final Ecommerce con Spring boot y Angular, Curso impartido por BEDU/HSBC </h1>
+En este proyecto se implementaron herramientas como Spring Boot + Spring Security + JWT + MySql + Loggers + Junit5 + Lombok + MapStruct y como fronted fue angular 15 y un template llamado RafCart que es una plantilla ya hecha en angular para mas informacion les dejo la liga ** https://themeforest.net/category/site-templates/admin-templates?term=angular%20material ** hay gratuitos que son unos repositorios en github o de compra
 
 ## Acceso a la Base Datos 
 * Recuerde crear su base de datos antes de ejecutar el proyecto y actualizar el nombre de la misma en el archivo **configuration.properties**. 
@@ -10,14 +10,14 @@ En este proyecto se implementaron herramientas como Spring Boot + Spring Securit
 ## Tablas
 
 Al ejecutar el proyecto por primera vez se crearan dos tablas en tu base de datos
-* Rol - En esta tabla es necesario insertar los dos roles que maneja el ejemplo, estos roles son **ADMINISTRADOR, USUARIO_RESTRINGIDO**, los nombres de usuarios los puede adaptar a sus necesidades
+* Rol - En esta tabla es necesario insertar los dos roles que se manejan: **ADMINISTRADOR, USUARIO_COMUN**, los nombres de usuarios los puede adaptar a sus necesidades.
 * Usuario - En esta tabla el sistema guardara el nuevo usuario con una referencia al ROL al que pertenece el usuario. La entidad usuario implementa la interfaz UserDetails de spring security que le ayuda a saber como obtener la informacion del usuario por ejemplo el **username** y si el usuario esta activo o no. 
 
 ## Rutas Sin Proteccion
-* Puede revisar en la clase **ConfiguracionSeguridad** las rutas permitidas como usuario anónimo. Las demas rutas es obligatorio enviar el token en la peticion y en dependencia del ROL permitido para el metodo podremos o no acceder al recurso. 
+* Puede revisar en la clase **ConfiguracionSeguridad** las rutas permitidas como usuario anónimo. Las demas rutas es obligatorio enviar el token en la peticion y en dependencia del ROL permitido para el metodo podremos o no acceder al recurso. En este caso para nuestro proyecto en angular la ruta anonima para todos en el sistema es home, sign in y el join 
 ## EndPoint o URL
 
-* POST http://127.0.0.1:8080/usuario/crear se usa para crear el usuario. Puede crear un usuario de cada tipo de rol para que pruebe el funcionamiento de la autorizacion.
+* POST http://localhost:8080/usuario/crear se usa para crear el usuario. Puede crear un usuario de cada tipo de rol para que pruebe el funcionamiento de la autorizacion.
 
 **JSON ENTRADA**
 ```json
@@ -38,7 +38,7 @@ Al ejecutar el proyecto por primera vez se crearan dos tablas en tu base de dato
 }
 ```
 
-* POST http://127.0.0.1:8080/usuario/login se usa para hacer login y nos devolveró el jwt que usaremos para acceder a los recursos protegidos de nuestra aplicacion.
+* POST http://localhost:8080/usuario/login se usa para hacer login y nos devolveró el jwt que usaremos para acceder a los recursos protegidos de nuestra aplicacion.
 
 **JSON ENTRADA**
 ```json
@@ -58,16 +58,31 @@ Al ejecutar el proyecto por primera vez se crearan dos tablas en tu base de dato
 }
 ```
 **Cada vez que se ejecute el método login se genera un token que tendrá una validez de 1h**
+* Estos endpoints que les muestro ya estan implementados en nuestro proyecto de frontend en angular solo es para probar en login, registro desde postman o insomnia.
 
-* GET http://127.0.0.1:8080/usuario/area/usuario-logueado Podras acceder siempre que la petición contenga el token válido, no importa el rol del usuario.
-* GET http://127.0.0.1:8080/usuario/area/administrador  Solo podras acceder si la petición contiene un token válido y de un usuario con rol ADMINISTRADOR
-* GET http://127.0.0.1:8080/usuario/area/usuario-restringido Solo podras acceder si la petición contiene un token válido y de un usuario con rol USUARIO_RESTRINGIDO
-* Observacion: Las rutas tienen nombres de los roles solo como demostración del ejercicio, el nombre de cada ruta dependerá de las necesidades de sus proyectos
+* GET http://localhost:8080/usuario/dell Podras acceder al endpoint que tengo manejando que es una computadora dell en BD obviamente cumpliendo el login para este recurso se permite el rol **ADMINISTRADOR, USUARIO_COMUN**.
+* GET http://localhost:8080/usuario/dell/186  Podras acceder al endpoint que tengo manejando que es una computadora dell en BD obviamente cumpliendo el login para este recurso se permite el rol **ADMINISTRADOR, USUARIO_COMUN**.
+* POST http://localhost:8080/usuario/dellCrear Podras crear una computadora igual manejado por estos dos roles **ADMINISTRADOR, USUARIO_COMUN** el json se construye asi Y te devuelve el json de entrada como salida.
+**JSON ENTRADA**
+```json
+{
+    "procesador":"intel i3",
+     "memoriaRam":"12 GB",
+     "disco":"2 TB"
+}
+```
+
+* UPDATE http://localhost:8080/usuario/dellEditar este endpoint solo se puede accerder con el rol **ADMINISTRADOR** el es el que puede modificar algun producto.
+* DELETE http://localhost:8080/usuario/dellBorrar este endpoint solo se puede accerder con el rol **ADMINISTRADOR** el es el que puede modificar algun producto.
+
+* Observacion: Las rutas tienen nombres de los roles solo como demostración del ejercicio, el nombre de cada ruta dependerá de las necesidades de sus proyectos, las rutas ya estan implementadas en nuestro proyecto de angular ya con el token devuelveto dependiendo del rol para asi poder acceder a ese recuros que necesitemos, al igual de que si estamos en rol usuario comun y queremos borrar un producto por ejemplo no esta permitido porque el backend tiene una validacion desde el controlador para saber que rol es el que se esta manejando, y bueno al igual del token que estemos manejando.
 
 ## Bono
 
-No es una buena practica exponer en nuestros endpoint nuestras entidades, esto es algo comun en la mayoria de los cursos de programacion que se encuentran en la red. Es por eso que aqui les dejo tambien un pequeño ejemplo de como podemos
+No es una buena practica exponer en nuestros endpoint nuestras entidades. Es por eso que aqui les dejo tambien un pequeño ejemplo de como podemos
 recibir y devolver DTO sin exponer nuestra entidad.
 
-Para este ejemplo se uso **mapstruct** para convertir el **UsuarioDTO -> Usuario** y **Usuario -> UsuarioDTO**.
+Para este ejemplo se uso **mapstruct** para convertir el **UsuarioDTO -> Usuario** y **Usuario -> UsuarioDTO**. Esto en cuanto al login pero igual en la entidad que manejo para hacer el crud igual estan implementados con DTOS.
+
+* Les dejo la liga del deploy, **link deploy** igual debemos de acceder al recursos haciendo los mismo pasos que aqui deberan de acceder a su base de datos remota y crear roles para poder interactuar con los endpoints
 
