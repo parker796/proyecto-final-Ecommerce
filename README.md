@@ -3,6 +3,7 @@
 En este proyecto se implementaron herramientas como Spring Boot + Spring Security + JWT + MySql + Loggers + Junit5 + Lombok + MapStruct y como fronted fue angular 15 y un template llamado RafCart que es una plantilla ya hecha en angular para mas informacion les dejo la liga ** https://themeforest.net/category/site-templates/admin-templates?term=angular%20material ** hay gratuitos que son unos repositorios en github o de compra
 
 ## Acceso a la Base Datos 
+* Para la base de datos aqui en el repositorio subo la bd y correr el query de la bd tal cual en el gestor si es mysqlworkbench mejor para que genere la base de datos.
 * Recuerde crear su base de datos antes de ejecutar el proyecto y actualizar el nombre de la misma en el archivo **configuration.properties**. 
 * El proyecto esta configurado para conectarse a una base de datos MYSQL pero puede cambiar en el **configuration.properties** las propiedades de conexión que se ajusten a su base de datos. 
 
